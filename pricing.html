@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing – ABC FL 0121 AVI</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; font-size: 13px; }
+  body { background: #f0f0f0; color: #333; }
+
+  /* Top nav */
+  .top-nav { background: #3b5ea6; display: flex; flex-wrap: wrap; }
+  .top-nav a { color: #fff; padding: 8px 12px; text-decoration: none; display: block; font-size: 12px; }
+  .top-nav a:hover, .top-nav a.active { background: #2a4480; }
+
+  /* Sub nav */
+  .sub-nav { background: #d8dce8; display: flex; border-bottom: 2px solid #3b5ea6; }
+  .sub-nav a { padding: 6px 14px; text-decoration: none; color: #333; font-size: 12px; }
+  .sub-nav a.active { background: #fff; border-top: 2px solid #3b5ea6; font-weight: bold; }
+
+  /* Action bar */
+  .action-bar { background: #fff; border-bottom: 1px solid #ccc; padding: 4px 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .action-bar a { color: #3b5ea6; text-decoration: none; font-size: 11px; padding: 2px 4px; }
+  .action-bar a:hover { text-decoration: underline; }
+
+  /* Main layout */
+  .main-wrap { display: flex; gap: 0; }
+  .main-content { flex: 1; padding: 12px; }
+  .sidebar { width: 240px; min-width: 220px; padding: 10px; background: #f7f7f7; border-left: 1px solid #ddd; }
+
+  /* Section */
+  .section-title { font-size: 15px; font-weight: bold; margin-bottom: 10px; color: #222; }
+  .policy-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #555; }
+  .required-note { color: red; font-size: 11px; margin-bottom: 10px; }
+
+  /* Fields */
+  .field-row { display: flex; align-items: center; margin-bottom: 6px; }
+  .field-label { width: 200px; color: #333; }
+  .field-value { color: #222; font-weight: normal; }
+
+  /* Coverage table */
+  .cov-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  .cov-table th { background: #c8cdd8; padding: 6px 8px; text-align: left; font-size: 12px; border: 1px solid #bbb; }
+  .cov-table td { padding: 6px 8px; border: 1px solid #ddd; background: #fff; }
+  .cov-table .rate-link { color: #3b5ea6; text-decoration: none; font-size: 11px; }
+
+  /* ======= QUOTA SHARE SECTION ======= */
+  .qs-card { border: 1px solid #3b5ea6; border-radius: 4px; margin: 14px 0 10px; background: #fff; }
+  .qs-header { background: #3b5ea6; color: #fff; padding: 7px 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; border-radius: 3px 3px 0 0; user-select: none; }
+  .qs-header-left { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 13px; }
+  .qs-badge { background: #f0c040; color: #333; font-size: 11px; font-weight: bold; padding: 2px 7px; border-radius: 10px; display: none; }
+  .qs-chevron { font-size: 12px; transition: transform 0.2s; }
+  .qs-chevron.collapsed { transform: rotate(-90deg); }
+  .qs-body { padding: 12px 14px; display: block; }
+  .qs-body.hidden { display: none; }
+
+  .qs-row { display: flex; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 4px; }
+  .qs-row label { width: 210px; color: #333; font-size: 12px; }
+  .qs-row .required-star { color: red; }
+
+  /* Toggle buttons */
+  .toggle-group { display: flex; gap: 0; }
+  .toggle-btn { padding: 4px 16px; border: 1px solid #3b5ea6; background: #fff; color: #3b5ea6; cursor: pointer; font-size: 12px; }
+  .toggle-btn:first-child { border-radius: 3px 0 0 3px; }
+  .toggle-btn:last-child { border-radius: 0 3px 3px 0; }
+  .toggle-btn.active { background: #3b5ea6; color: #fff; }
+
+  /* Inputs */
+  .qs-input { padding: 4px 6px; border: 1px solid #bbb; border-radius: 3px; font-size: 12px; width: 130px; }
+  .qs-input:focus { outline: none; border-color: #3b5ea6; }
+  .qs-input.readonly { background: #f0f0f0; color: #666; }
+  .qs-input.currency { width: 140px; }
+
+  /* Computed field */
+  .computed-val { display: inline-block; padding: 4px 8px; background: #e8eaf0; border: 1px solid #bbb; border-radius: 3px; font-size: 12px; min-width: 130px; color: #444; }
+
+  /* Conditional blocks */
+  .qs-conditional { margin-top: 6px; padding: 8px 10px; background: #f5f7fc; border-left: 3px solid #3b5ea6; border-radius: 0 3px 3px 0; }
+  .qs-conditional.hidden { display: none; }
+
+  /* Override section */
+  .qs-override-section { margin-top: 8px; }
+  .qs-override-reveal { display: none; margin-top: 6px; padding: 8px 10px; background: #fff8e8; border: 1px solid #e0c060; border-radius: 4px; }
+  .qs-override-reveal .helper-note { font-size: 11px; color: #8a6800; margin-top: 4px; font-style: italic; }
+
+  /* Split section */
+  .qs-split { margin-top: 10px; padding: 8px 10px; background: #f5f7fc; border: 1px solid #c8cdd8; border-radius: 4px; }
+  .qs-split-title { font-weight: bold; font-size: 12px; color: #3b5ea6; margin-bottom: 6px; }
+  .split-warning { display: none; color: #b86a00; background: #fff3cd; border: 1px solid #ffc107; border-radius: 3px; padding: 4px 8px; font-size: 11px; margin-top: 4px; }
+  .split-ok { display: none; color: #155724; background: #d4edda; border: 1px solid #28a745; border-radius: 3px; padding: 4px 8px; font-size: 11px; margin-top: 4px; }
+
+  /* Buttons */
+  .btn { padding: 5px 12px; border: none; border-radius: 3px; cursor: pointer; font-size: 12px; }
+  .btn-primary { background: #3b5ea6; color: #fff; }
+  .btn-primary:hover { background: #2a4480; }
+  .btn-outline { background: #fff; color: #3b5ea6; border: 1px solid #3b5ea6; }
+  .btn-outline:hover { background: #e8eaf0; }
+  .btn-danger-link { background: none; border: none; color: #c0392b; cursor: pointer; font-size: 11px; text-decoration: underline; padding: 0; margin-left: 12px; }
+
+  .qs-footer { margin-top: 10px; display: flex; align-items: center; gap: 10px; }
+
+  /* Licensed Producer */
+  .producer-row { display: flex; align-items: center; margin: 10px 0; }
+  .producer-row label { width: 120px; color: #333; }
+  .producer-row select { padding: 4px 6px; border: 1px solid #bbb; border-radius: 3px; font-size: 12px; width: 160px; }
+  .required-label::after { content: " *"; color: red; }
+
+  /* Bottom buttons */
+  .bottom-btns { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .bottom-btns .btn { background: #3b5ea6; color: #fff; padding: 6px 14px; font-size: 12px; border-radius: 3px; border: none; cursor: pointer; }
+  .bottom-btns .btn:hover { background: #2a4480; }
+
+  /* Sidebar panels */
+  .panel { background: #fff; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px; }
+  .panel-header { background: #3b5ea6; color: #fff; padding: 5px 10px; font-weight: bold; font-size: 12px; display: flex; align-items: center; justify-content: space-between; border-radius: 3px 3px 0 0; }
+  .panel-body { padding: 8px 10px; }
+  .panel-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px; }
+  .panel-row .pval { font-weight: bold; }
+  .next-step-btns { display: flex; gap: 6px; margin-top: 4px; }
+  .next-step-btns .btn { flex: 1; text-align: center; }
+
+  /* QS summary panel */
+  .qs-summary-panel { display: none; }
+  .qs-summary-panel .qs-sum-row { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 12px; }
+  .qs-sum-badge { font-size: 11px; font-weight: bold; padding: 1px 6px; border-radius: 8px; }
+  .badge-lead { background: #d4edda; color: #155724; }
+  .badge-follow { background: #cce5ff; color: #004085; }
+
+  .divider { border: none; border-top: 1px solid #ddd; margin: 8px 0; }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="#">Account</a>
+  <a href="#">Account Details</a>
+  <a href="#">Policy Info</a>
+  <a href="#">Policy Covg</a>
+  <a href="#">Location</a>
+  <a href="#">Aircraft Schedule</a>
+  <a href="#">Platinum Aircraft Additional Liability Coverages</a>
+  <a href="#">Aviation General Liability</a>
+  <a href="#">Pilot Information</a>
+  <a href="#">Pilot Clause And Training</a>
+  <a href="#">Endorsements</a>
+  <a href="#">Manuscript End</a>
+  <a href="#">Addi Interests</a>
+  <a href="#" class="active">Pricing</a>
+</nav>
+
+<!-- Sub Navigation -->
+<nav class="sub-nav">
+  <a href="#">Payment Details</a>
+  <a href="#">Actuarial Factors</a>
+  <a href="#" class="active">Pricing Analysis</a>
+</nav>
+
+<!-- Action Bar -->
+<div class="action-bar">
+  <a href="#">View Policy (ABC FL 0121..)</a>
+  <span style="color:#ccc">|</span>
+  <a href="#">View Policy Details</a>
+  <span style="color:#ccc">|</span>
+  <a href="#">View Client Information</a>
+  <span style="color:#ccc">|</span>
+  <a href="#">Save Quote/Policy</a>
+  <span style="color:#ccc">|</span>
+  <a href="#">View Documents</a>
+  <span style="color:#ccc">|</span>
+  <a href="#">Upload Policy Documents</a>
+  <span style="color:#ccc">|</span>
+  <a href="#">Client Documents</a>
+  <span style="color:#ccc">|</span>
+  <a href="#">Direct Link</a>
+</div>
+
+<!-- Main Layout -->
+<div class="main-wrap">
+  <div class="main-content">
+
+    <div class="section-title">Pricing</div>
+    <div class="policy-label">
+      <span>ABC FL 0121 AVI (Quote – New-Quoted)</span>
+      <span>QAVI2900002</span>
+    </div>
+    <p class="required-note">* Indicates a required field.</p>
+
+    <!-- Pricing fields -->
+    <div class="field-row"><span class="field-label">Premium</span><span class="field-value">$3,623.00</span></div>
+    <div class="field-row"><span class="field-label">Term Factor</span><span class="field-value">1.000</span></div>
+    <div class="field-row"><span class="field-label">Commission Rate %</span><span class="field-value">0</span></div>
+    <div class="field-row"><span class="field-label">IAT Expense Modification</span><span class="field-value">1.0</span></div>
+
+    <!-- Coverage Form Table -->
+    <table class="cov-table">
+      <thead>
+        <tr>
+          <th style="width:55%">Coverage Form</th>
+          <th style="width:20%">Premium</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Aircraft Hull and Liability</td>
+          <td>$499.00</td>
+          <td><a href="#" class="rate-link">Rate Detail</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>$499.99</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ===== QUOTA SHARE SECTION ===== -->
+    <div class="qs-card" id="qsCard">
+      <div class="qs-header" id="qsHeader" onclick="toggleQS()">
+        <div class="qs-header-left">
+          <span>&#9632; Quota Share</span>
+          <span class="qs-badge" id="qsBadge"></span>
+        </div>
+        <span class="qs-chevron" id="qsChevron">&#9660;</span>
+      </div>
+
+      <div class="qs-body" id="qsBody">
+
+        <!-- Is IAT Lead Carrier? -->
+        <div class="qs-row">
+          <label>Is IAT Lead Carrier? <span class="required-star">*</span></label>
+          <div class="toggle-group">
+            <button class="toggle-btn" id="btnLeadNo" onclick="setLead(false)">No (Following)</button>
+            <button class="toggle-btn" id="btnLeadYes" onclick="setLead(true)">Yes (Lead)</button>
+          </div>
+        </div>
+
+        <!-- IAT QS % -->
+        <div class="qs-row">
+          <label>IAT Quota Share % <span class="required-star">*</span></label>
+          <input type="number" class="qs-input" id="iatPct" min="0.01" max="99.99" step="0.01"
+                 placeholder="e.g. 50.00" oninput="onPctChange()" />
+          <span id="pctError" style="color:red;font-size:11px;margin-left:6px;display:none">Must be 0.01–99.99</span>
+        </div>
+
+        <!-- Other Carrier(s) % (computed) -->
+        <div class="qs-row">
+          <label>Other Carrier(s) %</label>
+          <span class="computed-val" id="otherPct">—</span>
+          <span style="font-size:11px;color:#888;margin-left:8px">(auto-computed)</span>
+        </div>
+
+        <!-- Override Premium button + reveal -->
+        <div class="qs-override-section">
+          <div class="qs-row">
+            <label>Premium Override</label>
+            <button class="btn btn-outline" id="btnOverride" onclick="toggleOverride()">&#9998; Override Premium</button>
+            <button class="btn-danger-link" id="btnClearOverride" onclick="clearOverride()" style="display:none">Clear Override</button>
+          </div>
+          <div class="qs-override-reveal" id="overrideReveal">
+            <div class="qs-row">
+              <label>Override Premium ($)</label>
+              <input type="text" class="qs-input currency" id="overridePremium" placeholder="e.g. 50000.00"
+                     oninput="onOverrideChange()" />
+            </div>
+            <div class="helper-note">&#9888; Enter the exact premium to book. The system-rated premium will not be used for billing.</div>
+          </div>
+        </div>
+
+        <!-- CONDITIONAL: Lead = YES fields -->
+        <div class="qs-conditional hidden" id="leadFields">
+          <div style="font-weight:bold;color:#3b5ea6;margin-bottom:6px;font-size:12px">Lead Carrier Fields</div>
+          <div class="qs-row">
+            <label>Lead Fee ($)</label>
+            <input type="text" class="qs-input currency" id="leadFee" placeholder="e.g. 2500.00" />
+            <span style="font-size:11px;color:#666;margin-left:8px">Flat, fully earned – no commission</span>
+          </div>
+        </div>
+
+        <!-- CONDITIONAL: Lead = NO (Following) fields -->
+        <div class="qs-conditional" id="followFields">
+          <div style="font-weight:bold;color:#3b5ea6;margin-bottom:6px;font-size:12px">Following Carrier – Lead Policy Details</div>
+          <div class="qs-row">
+            <label>Lead Carrier Name</label>
+            <input type="text" class="qs-input" id="leadCarrierName" placeholder="e.g. QBE Insurance" style="width:200px" />
+          </div>
+          <div class="qs-row">
+            <label>Lead Policy Number</label>
+            <input type="text" class="qs-input" id="leadPolicyNum" placeholder="e.g. QBE-AV-2026-001" style="width:200px" />
+          </div>
+          <div class="qs-row">
+            <label>Lead Underwriting Company</label>
+            <input type="text" class="qs-input" id="leadUWCo" placeholder="e.g. QBE Specialty Insurance" style="width:200px" />
+          </div>
+        </div>
+
+        <!-- Hull / Liability Split -->
+        <div class="qs-split" id="qsSplit">
+          <div class="qs-split-title">&#9654; IAT Premium Allocation (Hull / Liability Split)</div>
+          <div class="qs-row">
+            <label>Hull Premium – IAT Share ($)</label>
+            <input type="text" class="qs-input currency" id="hullPremium" placeholder="e.g. 25000.00" oninput="validateSplit()" />
+          </div>
+          <div class="qs-row">
+            <label>Liability Premium – IAT Share ($)</label>
+            <input type="text" class="qs-input currency" id="liabPremium" placeholder="e.g. 25000.00" oninput="validateSplit()" />
+          </div>
+          <div class="split-warning" id="splitWarning">&#9888; Hull + Liability does not equal the booked premium. Please reconcile.</div>
+          <div class="split-ok" id="splitOk">&#10003; Hull + Liability reconciles with booked premium.</div>
+        </div>
+
+        <!-- Footer actions -->
+        <div class="qs-footer">
+          <button class="btn-danger-link" onclick="clearQS()">&#10005; Clear Quota Share</button>
+        </div>
+
+      </div><!-- /qs-body -->
+    </div><!-- /qs-card -->
+    <!-- ===== END QUOTA SHARE SECTION ===== -->
+
+    <!-- Licensed Producer -->
+    <div class="producer-row">
+      <label class="required-label">Licensed Producer</label>
+      <select>
+        <option>Aviation Producer</option>
+        <option>Commercial Producer</option>
+      </select>
+    </div>
+
+    <!-- Bottom buttons -->
+    <div class="bottom-btns">
+      <button class="btn">Stat Codes</button>
+      <button class="btn">Aircraft Mods</button>
+      <button class="btn">Rating Worksheet</button>
+      <button class="btn">Policy Structure</button>
+      <button class="btn">Commission</button>
+    </div>
+
+  </div><!-- /main-content -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Policy Premium -->
+    <div class="panel">
+      <div class="panel-header">&#9660; Policy Premium</div>
+      <div class="panel-body">
+        <div class="panel-row"><span>Premium</span><span class="pval">$3,623.00</span></div>
+        <div class="panel-row"><span>Premium Change</span><span class="pval">$3,623.00</span></div>
+        <div class="panel-row"><span>Premium Prior</span><span class="pval">$0.00</span></div>
+        <div class="panel-row"><span>Premium Written</span><span class="pval">$3,623.00</span></div>
+        <hr class="divider">
+        <div class="panel-row" id="iatShareRow" style="display:none">
+          <span>IAT Share (<span id="iatPctLabel">—</span>%)</span>
+          <span class="pval" id="iatShareAmt">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- QS Summary Panel (shown when QS active) -->
+    <div class="panel qs-summary-panel" id="qsSummaryPanel">
+      <div class="panel-header">&#9660; Quota Share Summary</div>
+      <div class="panel-body qs-summary-panel" id="qsSummaryBody">
+        <div class="qs-sum-row"><span>IAT Role</span><span class="qs-sum-badge badge-follow" id="sumRole">Following</span></div>
+        <div class="qs-sum-row"><span>IAT %</span><span class="pval" id="sumPct">—</span></div>
+        <div class="qs-sum-row"><span>Other Carrier(s) %</span><span class="pval" id="sumOther">—</span></div>
+        <div id="sumLeadDetails"></div>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="panel">
+      <div class="panel-header">&#9660; Options</div>
+      <div class="panel-body">
+        <div class="panel-row">
+          <span>Include Forms <input type="checkbox" checked style="margin-left:4px"></span>
+          <button class="btn btn-primary" style="font-size:11px;padding:3px 8px">Policy Forms</button>
+        </div>
+        <div style="margin-top:6px">
+          <button class="btn btn-primary" style="width:100%;margin-top:4px;font-size:11px">Template Administration</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="panel">
+      <div class="panel-header">&#9660; Next Steps</div>
+      <div class="panel-body">
+        <div class="next-step-btns">
+          <button class="btn btn-primary">Quote</button>
+          <button class="btn btn-outline">Decline</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+</div><!-- /main-wrap -->
+
+<script>
+  // State
+  var isLead = false;
+  var overrideVisible = false;
+  var qsBodyVisible = true;
+  var BASE_PREMIUM = 3623.00;
+
+  // Init: set default toggle
+  document.getElementById('btnLeadNo').classList.add('active');
+
+  function toggleQS() {
+    qsBodyVisible = !qsBodyVisible;
+    document.getElementById('qsBody').classList.toggle('hidden', !qsBodyVisible);
+    document.getElementById('qsChevron').classList.toggle('collapsed', !qsBodyVisible);
+  }
+
+  function setLead(lead) {
+    isLead = lead;
+    document.getElementById('btnLeadYes').classList.toggle('active', lead);
+    document.getElementById('btnLeadNo').classList.toggle('active', !lead);
+    document.getElementById('leadFields').classList.toggle('hidden', !lead);
+    document.getElementById('followFields').classList.toggle('hidden', lead);
+    updateSummary();
+  }
+
+  function onPctChange() {
+    var val = parseFloat(document.getElementById('iatPct').value);
+    var errEl = document.getElementById('pctError');
+    if (isNaN(val) || val < 0.01 || val > 99.99) {
+      errEl.style.display = 'inline';
+      document.getElementById('otherPct').textContent = '—';
+      document.getElementById('qsBadge').style.display = 'none';
+      document.getElementById('qsBadge').textContent = '';
+      document.getElementById('iatShareRow').style.display = 'none';
+      updateSummaryPct(null);
+      return;
+    }
+    errEl.style.display = 'none';
+    var other = (100 - val).toFixed(2);
+    document.getElementById('otherPct').textContent = other + '%';
+
+    // Badge
+    var badge = document.getElementById('qsBadge');
+    badge.textContent = 'IAT ' + val.toFixed(2) + '%';
+    badge.style.display = 'inline-block';
+
+    // Sidebar IAT share
+    var iatAmt = (BASE_PREMIUM * val / 100).toFixed(2);
+    document.getElementById('iatShareRow').style.display = 'flex';
+    document.getElementById('iatPctLabel').textContent = val.toFixed(2);
+    document.getElementById('iatShareAmt').textContent = '$' + parseFloat(iatAmt).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+    validateSplit();
+    updateSummaryPct(val);
+    showQSSummaryPanel(true);
+  }
+
+  function toggleOverride() {
+    overrideVisible = !overrideVisible;
+    document.getElementById('overrideReveal').style.display = overrideVisible ? 'block' : 'none';
+    document.getElementById('btnClearOverride').style.display = overrideVisible ? 'inline' : 'none';
+    document.getElementById('btnOverride').textContent = overrideVisible ? '✏ Override Active' : '✏ Override Premium';
+  }
+
+  function clearOverride() {
+    overrideVisible = false;
+    document.getElementById('overrideReveal').style.display = 'none';
+    document.getElementById('btnClearOverride').style.display = 'none';
+    document.getElementById('btnOverride').textContent = '✏ Override Premium';
+    document.getElementById('overridePremium').value = '';
+    validateSplit();
+  }
+
+  function onOverrideChange() {
+    validateSplit();
+  }
+
+  function getBookedPremium() {
+    if (overrideVisible) {
+      var v = parseFloat(document.getElementById('overridePremium').value.replace(/[^0-9.]/g,''));
+      if (!isNaN(v)) return v;
+    }
+    var pct = parseFloat(document.getElementById('iatPct').value);
+    if (!isNaN(pct) && pct > 0) return parseFloat((BASE_PREMIUM * pct / 100).toFixed(2));
+    return null;
+  }
+
+  function validateSplit() {
+    var hull = parseFloat(document.getElementById('hullPremium').value.replace(/[^0-9.]/g,''));
+    var liab = parseFloat(document.getElementById('liabPremium').value.replace(/[^0-9.]/g,''));
+    var warn = document.getElementById('splitWarning');
+    var ok = document.getElementById('splitOk');
+    warn.style.display = 'none';
+    ok.style.display = 'none';
+    if (isNaN(hull) || isNaN(liab)) return;
+    var booked = getBookedPremium();
+    if (booked === null) return;
+    var sum = parseFloat((hull + liab).toFixed(2));
+    if (Math.abs(sum - booked) < 0.02) {
+      ok.style.display = 'block';
+    } else {
+      warn.style.display = 'block';
+    }
+  }
+
+  function showQSSummaryPanel(show) {
+    var panels = document.querySelectorAll('.qs-summary-panel');
+    panels.forEach(function(p){ p.style.display = show ? 'block' : 'none'; });
+  }
+
+  function updateSummaryPct(val) {
+    document.getElementById('sumPct').textContent = val ? val.toFixed(2) + '%' : '—';
+    document.getElementById('sumOther').textContent = val ? (100 - val).toFixed(2) + '%' : '—';
+  }
+
+  function updateSummary() {
+    var roleEl = document.getElementById('sumRole');
+    var detailEl = document.getElementById('sumLeadDetails');
+    if (isLead) {
+      roleEl.textContent = 'Lead';
+      roleEl.className = 'qs-sum-badge badge-lead';
+      detailEl.innerHTML = '';
+    } else {
+      roleEl.textContent = 'Following';
+      roleEl.className = 'qs-sum-badge badge-follow';
+      detailEl.innerHTML = '<div class="qs-sum-row"><span>Lead Carrier</span><span id="sumCarrier" style="font-size:11px;color:#555">—</span></div>';
+    }
+  }
+
+  function clearQS() {
+    if (!confirm('Clear all Quota Share fields?')) return;
+    document.getElementById('iatPct').value = '';
+    document.getElementById('otherPct').textContent = '—';
+    document.getElementById('qsBadge').style.display = 'none';
+    document.getElementById('pctError').style.display = 'none';
+    document.getElementById('leadFee').value = '';
+    document.getElementById('leadCarrierName').value = '';
+    document.getElementById('leadPolicyNum').value = '';
+    document.getElementById('leadUWCo').value = '';
+    document.getElementById('hullPremium').value = '';
+    document.getElementById('liabPremium').value = '';
+    document.getElementById('splitWarning').style.display = 'none';
+    document.getElementById('splitOk').style.display = 'none';
+    document.getElementById('iatShareRow').style.display = 'none';
+    clearOverride();
+    setLead(false);
+    showQSSummaryPanel(false);
+    // Collapse section
+    if (qsBodyVisible) toggleQS();
+  }
+
+  // Init summary panel hidden
+  showQSSummaryPanel(false);
+</script>
+</body>
+</html>
