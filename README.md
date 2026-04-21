@@ -1,21 +1,30 @@
-# QuotaShare – Aviation Quota Share Management
+# QuotaShare – IAT Aviation Quota Share Project
 
-This repository contains the interactive Pricing screen UI prototype and Business Requirements artifact for IAT Insurance's Aviation Quota Share feature, developed from Working Sessions 1–3 (April 14–17, 2026).
+This repository contains artifacts developed from the IAT Aviation Quota Share working sessions (Sessions 1–3, April 14–17, 2026).
 
 ## Files
 
 | File | Description |
 |---|---|
-| `pricing.html` | Self-contained interactive HTML prototype of the Unity Pricing screen, including the new **Quota Share** collapsible section inserted above the Licensed Producer field |
-| `Business_Requirements.md` | Full Business Requirements Document covering all quota share scenarios (lead carrier, following carrier, midterm, renewal, billing, taxes, NACHA, and downstream data) |
+| `pricing.html` | Interactive Pricing screen replica with Quota Share UI section |
+| `Business_Requirements.md` | Full Business Requirements Document (BRD) for Quota Share in Unity |
 
 ## Background
 
-These artifacts are derived from three quota share working sessions held April 14–17, 2026, involving IAT Aviation Underwriting, Product, IT, and Operations stakeholders.
+IAT Insurance Group writes Aviation Quota Share (QS) business where IAT acts as either the **Lead Carrier** (issues full policy) or a **Following/Participating Carrier** (issues two-page Following Form only). This project defines the requirements to automate the QS workflow within the Unity policy administration system.
 
 ## Key Concepts
 
-- **Ground-Up Quota Share** – IAT takes a vertical percentage slice of the full risk (not an excess layer)
-- **Lead Carrier** – IAT issues the full policy; bills only its share of premium; may charge a flat lead fee
-- **Following Carrier** – IAT issues a two-page Following Form only; no dec page, no coverage form, no endorsements; bills its share via billing summary
-- Different QS percentages by coverage part require separate policies (same submission number) 
+- **Ground-up QS only** – IAT takes a vertical percentage from dollar one (no excess QS)
+- **Lead scenario** – Full policy issued; QS endorsement (AVA/AVP/AVG/AV) attached; only IAT's % billed
+- **Following scenario** – Two-page Following Form + billing summary only; no dec page, no endorsements
+- **Premium override** – Required because rating engine may not produce exact dollar match
+- **Separate policies** – Required when different QS % apply to different coverage parts on the same account
+
+## Sessions
+
+| Session | Date | Topics Covered |
+|---|---|---|
+| Session 1 | April 14, 2026 | Ground-up QS definition, Lead carrier scenario, endorsement forms, billing, claims |
+| Session 2 | April 15, 2026 | Following carrier scenario, Following Form, premium override, midterm, taxes/fees |
+| Session 3 | April 17, 2026 | Separate policy decision, premium override mechanics, large fleet spot-check, Kentucky tax, NACHA, document generation |
